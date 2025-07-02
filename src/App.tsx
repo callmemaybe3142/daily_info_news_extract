@@ -11,8 +11,17 @@ import { DocumentPreview } from './components/DocumentPreview';
 import { DataExtraction } from './components/DataExtraction';
 
 const AppContent: React.FC = () => {
-  const { uploadedFile } = useApp();
+  const { uploadedFile, currentStep } = useApp();
   const [showDocumentPreview, setShowDocumentPreview] = useState(true);
+
+  // Hide document preview when switching to table view
+  React.useEffect(() => {
+    if (currentStep === 'tableView') {
+      setShowDocumentPreview(false);
+    } else if (currentStep === 'newsList') {
+      setShowDocumentPreview(true);
+    }
+  }, [currentStep]);
 
   const toggleDocumentPreview = () => {
     setShowDocumentPreview(!showDocumentPreview);

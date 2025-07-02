@@ -7,6 +7,7 @@ import {
 import { ArrowForward } from '@mui/icons-material';
 import { ReportDate } from './ReportDate';
 import { NewsExtraction } from './NewsExtraction';
+import { useApp } from '../contexts/AppContext';
 
 interface NewsListProps {
   isFullWidth?: boolean;
@@ -14,6 +15,13 @@ interface NewsListProps {
 }
 
 export const NewsList: React.FC<NewsListProps> = ({ isFullWidth: _isFullWidth = false, onProceed }) => {
+  const { generateTableData } = useApp();
+
+  const handleProceed = () => {
+    generateTableData();
+    onProceed?.();
+  };
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -45,7 +53,7 @@ export const NewsList: React.FC<NewsListProps> = ({ isFullWidth: _isFullWidth = 
             variant="contained"
             size="large"
             endIcon={<ArrowForward />}
-            onClick={onProceed}
+            onClick={handleProceed}
             sx={{ minWidth: 120 }}
           >
             Proceed

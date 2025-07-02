@@ -14,26 +14,7 @@ export class BurmeseConverter {
     return englishNumber;
   }
 
-  private static readonly burmeseMonths: Record<string, string> = {
-    'ဇန်နဝါရီလ': '01',
-    'ဖေဖော်ဝါရီလ': '02',
-    'မတ်လ': '03',
-    'ဧပြီလ': '04',
-    'မေလ': '05',
-    'ဇွန်လ': '06',
-    'ဇူလိုင်လ': '07',
-    'သြဂုတ်လ': '08',
-    'စက်တင်ဘာလ': '09',
-    'အောက်တိုဘာလ': '10',
-    'နိုဝင်ဘာလ': '11',
-    'ဒီဇင်ဘာလ': '12'
-  };
-
-  static burmeseMonthToNumber(monthName: string): string | null {
-    return this.burmeseMonths[monthName] || null;
-  }
-
-    static extractReportDate(content: string): string | null {
+  static extractReportDate(content: string): string | null {
     // Pattern to match "ရက်စွဲ" followed by optional spaces, dash, and date components
     // Handles various spacing patterns like:
     // ရက်စွဲ - ၁ - ၆ - ၂၀၂၅

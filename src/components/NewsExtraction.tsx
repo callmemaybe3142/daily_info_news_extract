@@ -73,11 +73,11 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
               Extracted News
             </Typography>
           </Box>
-          
-          <Box sx={{ 
-            border: '2px dashed #e0e0e0', 
-            borderRadius: 2, 
-            p: 4, 
+
+          <Box sx={{
+            border: '2px dashed #e0e0e0',
+            borderRadius: 2,
+            p: 4,
             textAlign: 'center',
             backgroundColor: '#fafafa'
           }}>
@@ -108,8 +108,8 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
           />
         </Box>
 
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             maxHeight: '600px',
             overflowY: 'auto',
             overflowX: 'hidden',
@@ -132,16 +132,16 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
             },
           }}
         >
-          <Box sx={{ px: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                        {newsItems.map((item) => {
+          <Box sx={{ px: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            {newsItems.map((item) => {
               const isEditing = editing[item.id];
               const currentContent = isEditing ? editingContent[item.id] : item.content;
 
               return (
-                <Card 
+                <Card
                   key={item.id}
-                  variant="outlined" 
-                  sx={{ 
+                  variant="outlined"
+                  sx={{
                     width: '100%',
                     transition: 'all 0.2s',
                     backgroundColor: 'white',
@@ -153,9 +153,9 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
                 >
                   {/* Edit Button - Absolute positioned */}
                   {!isEditing && (
-                    <IconButton 
+                    <IconButton
                       onClick={() => handleEditStart(item)}
-                      sx={{ 
+                      sx={{
                         position: 'absolute',
                         top: 12,
                         right: 12,
@@ -174,9 +174,9 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
                   {/* Save/Cancel Buttons - Absolute positioned */}
                   {isEditing && (
                     <Box sx={{ position: 'absolute', top: 12, right: 12, display: 'flex', gap: 1 }}>
-                      <IconButton 
+                      <IconButton
                         onClick={() => handleEditSave(item)}
-                        sx={{ 
+                        sx={{
                           backgroundColor: 'rgba(76, 175, 80, 0.1)',
                           width: 32,
                           height: 32,
@@ -187,9 +187,9 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
                       >
                         <Save fontSize="small" color="success" />
                       </IconButton>
-                      <IconButton 
+                      <IconButton
                         onClick={() => handleEditCancel(item)}
-                        sx={{ 
+                        sx={{
                           backgroundColor: 'rgba(244, 67, 54, 0.1)',
                           width: 32,
                           height: 32,
@@ -218,9 +218,9 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
                       />
                     ) : (
                       <>
-                        <Typography 
-                          variant="body2" 
-                          sx={{ 
+                        <Typography
+                          variant="body2"
+                          sx={{
                             lineHeight: 1.6,
                             whiteSpace: 'pre-wrap',
                             wordBreak: 'break-word',
@@ -228,6 +228,9 @@ export const NewsExtraction: React.FC<NewsExtractionProps> = ({ className }) => 
                             mt: 1
                           }}
                         >
+                          <Typography variant="caption" color="text.secondary" fontWeight="bold" sx={{ display: 'inline' }}>
+                            {item.index}.    
+                          </Typography>
                           {currentContent}
                         </Typography>
 

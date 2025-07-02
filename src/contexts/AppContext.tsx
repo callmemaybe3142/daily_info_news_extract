@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import type { ReactNode } from 'react';
-import type { AppState, AppContextType, FileData, ExtractedDocumentData } from '../types';
+import type { AppState, AppContextType, FileData, ExtractedDocumentData, TableDataItem } from '../types';
 import { FileService } from '../services/fileService';
 import { BurmeseConverter } from '../utils/burmeseConverter';
 import { NewsExtractor } from '../utils/newsExtractor';
@@ -14,7 +14,8 @@ type AppAction =
   | { type: 'SET_EXTRACTED_DATA'; payload: any[] }
   | { type: 'SET_CURRENT_STEP'; payload: 'newsList' | 'tableView' }
   | { type: 'UPDATE_DOCUMENT_DATA'; payload: Partial<ExtractedDocumentData> }
-  | { type: 'UPDATE_NEWS_ITEM'; payload: { id: string; content: string } };
+  | { type: 'UPDATE_NEWS_ITEM'; payload: { id: string; content: string } }
+  | { type: 'SET_TABLE_DATA'; payload: TableDataItem[] };
 
 // Initial state
 const initialState: AppState = {
@@ -23,6 +24,7 @@ const initialState: AppState = {
   error: null,
   extractedData: null,
   documentData: null,
+  tableData: null,
   currentStep: 'newsList',
 };
 
@@ -36,7 +38,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
     case 'SET_FILE':
       return { ...state, uploadedFile: action.payload, error: null };
     case 'CLEAR_FILE':
-      return { ...state, uploadedFile: null, extractedData: null, documentData: null, error: null, currentStep: 'newsList' };
+      return { ...state, uploadedFile: null, extractedData: null, documentData: null, tableData: null, error: null, currentStep: 'newsList' };
     case 'SET_EXTRACTED_DATA':
       return { ...state, extractedData: action.payload };
     case 'SET_CURRENT_STEP':
@@ -60,6 +62,8 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
         };
       }
       return state;
+    case 'SET_TABLE_DATA':
+      return { ...state, tableData: action.payload };
     default:
       return state;
   }
@@ -94,7 +98,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
       // Extract document data after file is processed
       if (fileData.rawText) {
         const reportDate = BurmeseConverter.extractReportDate(fileData.rawText);
-        const newsItems = NewsExtractor.extractNewsItems(fileData.rawText);
+        const newsItems = await NewsExtractor.extractNewsItems(fileData.rawText);
         dispatch({ type: 'UPDATE_DOCUMENT_DATA', payload: { reportDate, newsItems } });
       } else {
         dispatch({ type: 'UPDATE_DOCUMENT_DATA', payload: { reportDate: null, newsItems: [] } });
@@ -131,6 +135,123 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: 'UPDATE_NEWS_ITEM', payload: { id, content } });
   };
 
+  const generateTableData = (): void => {
+    if (state.documentData) {
+      const tableData: TableDataItem[] = [];
+      let idCounter = 1;
+      
+      state.documentData.newsItems.forEach(item => {
+        // If no categories, create one row with empty categories
+        if (item.categories.length === 0) {
+          tableData.push({
+            id: idCounter++,
+            isFollowUp: false,
+            source: item.source,
+            reportNumber: item.index,
+            reportDate: state.documentData?.reportDate || null,
+            caseDate: item.caseDate,
+            state: item.location.state,
+            district: item.location.district,
+            township: item.location.township,
+            town: item.location.town,
+            quarter: item.location.quarter,
+            village: item.location.village,
+            locationDetail: item.location.locationDetail,
+            mgrs: item.location.mgrs,
+            mainCategory: '',
+            primaryCategory: '',
+            secondaryCategory: '',
+            thirdCategory: null,
+            fourthCategory: null,
+            actorGroups: null,
+            actors: null,
+            countries: null,
+            newsContent: item.content,
+            urls: item.urls.length > 0 ? item.urls.join(', ') : '-',
+            SACDid: false,
+            infrastructures: null,
+            effectRange: null,
+            sacName: null,
+            sacAdmin: null,
+            sacLost: false,
+            alliesName: null,
+            alliesLost: false,
+            sacDeath: null,
+            sacInjury: null,
+            sacCaptive: null,
+            alliesDeath: null,
+            alliesInjury: null,
+            alliesCaptive: null,
+            publicCaptive: null,
+            publicInjury: null,
+            publicDeath: null,
+            publicBuilding: null,
+            religionBuilding: null,
+            hospital: null,
+            schools: null,
+            refugeeCamp: null,
+            remark: null
+          });
+        } else {
+          // Create a row for each category
+          item.categories.forEach((category, categoryIndex) => {
+            tableData.push({
+              id: idCounter++,
+              isFollowUp: false,
+              source: categoryIndex === 0 ? item.source : 'Duplicate',
+              reportNumber: item.index,
+              reportDate: state.documentData?.reportDate || null,
+              caseDate: item.caseDate,
+              state: item.location.state,
+              district: item.location.district,
+              township: item.location.township,
+              town: item.location.town,
+              quarter: item.location.quarter,
+              village: item.location.village,
+              locationDetail: item.location.locationDetail,
+              mgrs: item.location.mgrs,
+              mainCategory: category.main_category,
+              primaryCategory: category.primary_category,
+              secondaryCategory: category.secondary_category,
+              thirdCategory: null,
+              fourthCategory: null,
+              actorGroups: null,
+              actors: null,
+              countries: null,
+              newsContent: item.content,
+              urls: item.urls.length > 0 ? item.urls.join(', ') : '-',
+              SACDid: false,
+              infrastructures: null,
+              effectRange: null,
+              sacName: null,
+              sacAdmin: null,
+              sacLost: false,
+              alliesName: null,
+              alliesLost: false,
+              sacDeath: null,
+              sacInjury: null,
+              sacCaptive: null,
+              alliesDeath: null,
+              alliesInjury: null,
+              alliesCaptive: null,
+              publicCaptive: null,
+              publicInjury: null,
+              publicDeath: null,
+              publicBuilding: null,
+              religionBuilding: null,
+              hospital: null,
+              schools: null,
+              refugeeCamp: null,
+              remark: null
+            });
+          });
+        }
+      });
+      
+      dispatch({ type: 'SET_TABLE_DATA', payload: tableData });
+    }
+  };
+
   const contextValue: AppContextType = {
     ...state,
     uploadFile,
@@ -140,6 +261,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setCurrentStep,
     updateDocumentData,
     updateNewsItem,
+    generateTableData,
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

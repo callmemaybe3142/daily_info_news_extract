@@ -1,8 +1,11 @@
 import { BurmeseConverter } from './burmeseConverter';
+import { DateTimeExtractor } from './datetimeExtractor';
+import { CategoryExtractor } from './categoryExtractor';
+import { LocationExtractor } from './locationExtractor';
 import type { NewsItem } from '../types';
 
 export class NewsExtractor {
-  static extractNewsItems(content: string): NewsItem[] {
+  static async extractNewsItems(content: string): Promise<NewsItem[]> {
     try {
       const newsItems: NewsItem[] = [];
       
@@ -11,10 +14,14 @@ export class NewsExtractor {
       const matches = [...content.matchAll(newsPattern)];
       
       if (matches) {
-        matches.forEach((match) => {
+        for (const match of matches) {
           const burmeseNumber = match[1].replace('။', '');
           const englishNumber = BurmeseConverter.burmeseToEnglishNumber(burmeseNumber);
           const newsContent = (match[1] + match[2]).trim();
+          const cleanNewsContent = this.extractCleanNewsContent(newsContent);
+          const caseDate = DateTimeExtractor.extractCaseDate(cleanNewsContent);
+          const { source, categories } = CategoryExtractor.extractSourceAndCategories(cleanNewsContent);
+          const location = await LocationExtractor.extractLocations(cleanNewsContent);
           // URLs block (may be empty)
           const urlsBlock = match[3] || '';
           // Extract URLs from the urlsBlock
@@ -22,11 +29,15 @@ export class NewsExtractor {
           newsItems.push({
             id: `news-${englishNumber}`,
             originalText: newsContent + urlsBlock,
-            content: newsContent,
+            content: cleanNewsContent,
             index: parseInt(englishNumber, 10),
-            urls: urls
+            urls: urls,
+            caseDate: caseDate,
+            source: source,
+            categories: categories,
+            location: location
           });
-        });
+        }
       }
       
       // Sort by index to maintain order
@@ -34,6 +45,20 @@ export class NewsExtractor {
     } catch (error) {
       console.error('Error extracting news items:', error);
       return [];
+    }
+  }
+
+  static extractCleanNewsContent(newsContent: string): string {
+    try {
+      // Remove Burmese number + ။ at the beginning
+      // Pattern: Burmese numbers (၀-၉) followed by ။
+      const cleanContent = newsContent.replace(/^[၀-၉]+။\s*/, '');
+      
+      // Trim any leading/trailing whitespace
+      return cleanContent.trim();
+    } catch (error) {
+      console.error('Error extracting clean news content:', error);
+      return newsContent; // Return original content if cleaning fails
     }
   }
 
