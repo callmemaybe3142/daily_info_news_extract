@@ -18,7 +18,7 @@ const ActorsSection: React.FC<ActorsSectionProps> = ({ formData, onChange }) => 
         
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TypeaheadMultiple
-            label="Actor Groups"
+            label="ပါဝင်သူအုပ်စုကြီး"
             value={formData.actorGroups || ''}
             options={actorGroupsOptions}
             onChange={(value) => onChange('actorGroups', value)}
@@ -26,7 +26,7 @@ const ActorsSection: React.FC<ActorsSectionProps> = ({ formData, onChange }) => 
             size="small"
           />
           <TypeaheadMultiple
-            label='Actors'
+            label='ပါဝင်သူများ'
             value={formData.actors || ''}
             options={actorsOptions}
             onChange={(value) => onChange('actors', value)}
@@ -34,7 +34,7 @@ const ActorsSection: React.FC<ActorsSectionProps> = ({ formData, onChange }) => 
             size="small"
           />
           <TypeaheadMultiple
-            label='Countries'
+            label='နိုင်ငံများ'
             value={formData.countries || ''}
             options={countriesOptions}
             onChange={(value) => onChange('countries', value)}

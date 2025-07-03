@@ -110,17 +110,17 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
                 onChange={(e) => onChange('isFollowUp', e.target.checked)}
               />
             }
-            label="Follow Up"
+            label="နောက်ဆက်တွဲ"
           />
           <TextField
-            label="Source"
+            label="သတင်းအရင်းအမြစ်"
             value={formData.source || ''}
             onChange={(e) => onChange('source', e.target.value)}
             fullWidth
             size="small"
           />
           <TextField
-            label="Report Number"
+            label="အစီရင်ခံစာအမှတ်"
             type="number"
             value={formData.reportNumber || ''}
             onChange={(e) => onChange('reportNumber', parseInt(e.target.value) || 0)}
@@ -132,7 +132,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
         {/* Second row - Dates */}
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <DatePicker
-            label="Report Date"
+            label="သတင်းတင်ပြသည့်ရက်စွဲ"
             value={parseDate(formData.reportDate)}
             format="DD/MM/YYYY"
             onChange={(date) => {
@@ -141,7 +141,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
             slotProps={{ textField: { fullWidth: true, size: 'small' } }}
           />
           <DatePicker
-            label="Case Date"
+            label="ဖြစ်ပွားသည့် နေ့စွဲ"
             value={parseDate(formData.caseDate)}
             format="DD/MM/YYYY"
             onChange={(date) => {
@@ -154,7 +154,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
         {/* Third row - State, District, Township */}
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TypeaheadSingle
-            label="State"
+            label="တိုင်းနှင့်ပြည်နယ်"
             value={formData.state || ''}
             onChange={(value) => handleLocationChange('state', value || '')}
             options={stateOptions}
@@ -162,7 +162,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
             size="small"
           />
           <TypeaheadSingle
-            label="District"
+            label="ခရိုင်"
             value={formData.district || ''}
             onChange={(value) => handleLocationChange('district', value || '')}
             options={districtOptions}
@@ -170,7 +170,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
             size="small"
           />
           <TypeaheadSingle
-            label="Township"
+            label="မြို့နယ်"
             value={formData.township || ''}
             onChange={(value) => handleLocationChange('township', value || '')}
             options={townshipOptions}
@@ -182,7 +182,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
         {/* Fourth row - Town, Quarter, Village */}
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TypeaheadSingle
-            label="Town"
+            label="မြို့"
             value={formData.town || ''}
             onChange={(value) => handleLocationChange('town', value || '')}
             options={townOptions}
@@ -190,14 +190,14 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
             size="small"
           />
           <TextField
-            label="Quarter"
+            label="ရပ်ကွက်"
             value={formData.quarter || ''}
             onChange={(e) => onChange('quarter', e.target.value)}
             fullWidth
             size="small"
           />
           <TextField
-            label="Village"
+            label="ကျေးရွာ"
             value={formData.village || ''}
             onChange={(e) => onChange('village', e.target.value)}
             fullWidth
@@ -208,7 +208,7 @@ const BasicInfoSection: React.FC<BasicInfoSectionProps> = ({ formData, onChange 
         {/* Fifth row - Location Detail and MGRS */}
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TextField
-            label="Location Detail"
+            label="တည်နေရာအသေးစိတ်"
             value={formData.locationDetail || ''}
             onChange={(e) => onChange('locationDetail', e.target.value)}
             fullWidth

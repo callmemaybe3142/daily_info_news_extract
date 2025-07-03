@@ -16,7 +16,7 @@ const InfrastructureSection: React.FC<InfrastructureSectionProps> = ({ formData,
         
         <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
           <TextField
-            label="Public Building"
+            label="ပြည်သူပိုင်အဆောက်အအုံ"
             type="number"
             value={formData.publicBuilding || ''}
             onChange={(e) => onChange('publicBuilding', parseInt(e.target.value) || null)}
@@ -24,7 +24,7 @@ const InfrastructureSection: React.FC<InfrastructureSectionProps> = ({ formData,
             sx={{ minWidth: 150 }}
           />
           <TextField
-            label="Religion Building"
+            label="ဘာသာရေးအဆောက်အအုံ"
             type="number"
             value={formData.religionBuilding || ''}
             onChange={(e) => onChange('religionBuilding', parseInt(e.target.value) || null)}
@@ -32,7 +32,7 @@ const InfrastructureSection: React.FC<InfrastructureSectionProps> = ({ formData,
             sx={{ minWidth: 150 }}
           />
           <TextField
-            label="Hospital"
+            label="ဆေးရုံ"
             type="number"
             value={formData.hospital || ''}
             onChange={(e) => onChange('hospital', parseInt(e.target.value) || null)}
@@ -40,7 +40,7 @@ const InfrastructureSection: React.FC<InfrastructureSectionProps> = ({ formData,
             sx={{ minWidth: 150 }}
           />
           <TextField
-            label="Schools"
+            label="ကျောင်း"
             type="number"
             value={formData.schools || ''}
             onChange={(e) => onChange('schools', parseInt(e.target.value) || null)}
@@ -48,7 +48,7 @@ const InfrastructureSection: React.FC<InfrastructureSectionProps> = ({ formData,
             sx={{ minWidth: 150 }}
           />
           <TextField
-            label="Refugee Camp"
+            label="ဒုက္ခသည်စခန်း"
             type="number"
             value={formData.refugeeCamp || ''}
             onChange={(e) => onChange('refugeeCamp', parseInt(e.target.value) || null)}

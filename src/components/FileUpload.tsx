@@ -23,7 +23,7 @@ const VisuallyHiddenInput = styled('input')({
 });
 
 export const FileUpload: React.FC = () => {
-  const { isLoading, error, uploadFile, uploadedFile, setTableData, setCurrentStep } = useApp();
+  const { isLoading, error, uploadFile,  setTableData, setCurrentStep } = useApp();
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -42,7 +42,6 @@ export const FileUpload: React.FC = () => {
       setCurrentStep('tableView');
       const tableData = await import('../services/fileService').then(m => m.FileService.parseCSVFile(file));
       setTableData(tableData);
-      console.log(tableData)
     } catch (e) {
       // Optionally handle error
       console.error(e);

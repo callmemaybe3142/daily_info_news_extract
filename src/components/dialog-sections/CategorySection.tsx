@@ -63,21 +63,21 @@ const CategorySection: React.FC<CategorySectionProps> = ({ formData, onChange })
         {/* First row - Main categories */}
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TextField
-            label="Main Category"
+            label="ပင်မကဏ္ဍကြီးများ"
             value={formData.mainCategory || ''}
             onChange={(e) => onChange('mainCategory', e.target.value)}
             fullWidth
             size="small"
           />
           <TextField
-            label="Primary Category"
+            label="သတင်းအမျိုးအစား"
             value={formData.primaryCategory || ''}
             onChange={(e) => onChange('primaryCategory', e.target.value)}
             fullWidth
             size="small"
           />
           <TextField
-            label="Secondary Category"
+            label="ဒုတိယအဆင့်သတင်းအမျိုးအစားခွဲများ"
             value={formData.secondaryCategory || ''}
             onChange={(e) => onChange('secondaryCategory', e.target.value)}
             fullWidth
@@ -88,7 +88,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({ formData, onChange })
         {/* Second row - Additional categories */}
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TypeaheadSingle
-            label="Third Category"
+            label="တတိယအဆင့်သတင်းအမျိုးအစားခွဲများ"
             value={formData.thirdCategory || ''}
             options={thirdCategoryOptions}
             onChange={(value) => onChange('thirdCategory', value)}
@@ -96,7 +96,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({ formData, onChange })
             size="small"
           />
           <TypeaheadSingle
-            label="Fourth Category"
+            label="စတုတ္ထအဆင့်သတင်းအမျိုးအစားခွဲများ"
             value={formData.fourthCategory || ''}
             options={fourthCategoryOptions}
             onChange={(value) => onChange('fourthCategory', value)}

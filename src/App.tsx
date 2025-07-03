@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import {
   Box,
-  IconButton,
-  Tooltip,
+  // IconButton,
+  // Tooltip,
   ButtonGroup,
   Button,
 } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+// import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { FileUpload } from './components/FileUpload';
 import { DocumentPreview } from './components/DocumentPreview';
@@ -29,9 +29,9 @@ const AppContent: React.FC = () => {
     }
   }, [currentStep]);
 
-  const toggleDocumentPreview = () => {
-    setShowDocumentPreview(!showDocumentPreview);
-  };
+  // const toggleDocumentPreview = () => {
+  //   setShowDocumentPreview(!showDocumentPreview);
+  // };
 
   return (
     <Box sx={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
@@ -60,8 +60,8 @@ const AppContent: React.FC = () => {
         )}
       </Box>
 
-      {/* Absolute positioned toggle button */}
-      {hasData && uploadedFile && (
+      {/*  {/* Absolute positioned toggle button */}
+      {/* {hasData && uploadedFile && (
         <Tooltip title={showDocumentPreview ? "Hide Document Preview" : "Show Document Preview"}>
           <IconButton 
             onClick={toggleDocumentPreview}
@@ -82,7 +82,7 @@ const AppContent: React.FC = () => {
             {showDocumentPreview ? <VisibilityOff /> : <Visibility />}
           </IconButton>
         </Tooltip>
-      )}
+      )}  */}
 
       {hasData && (
         <>

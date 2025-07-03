@@ -16,7 +16,7 @@ const AlliesSection: React.FC<AlliesSectionProps> = ({ formData, onChange }) => 
         
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <TextField
-            label="Allies Name"
+            label="မိမိတပ်အမည်များ"
             value={formData.alliesName || ''}
             onChange={(e) => onChange('alliesName', e.target.value)}
             fullWidth
@@ -29,7 +29,7 @@ const AlliesSection: React.FC<AlliesSectionProps> = ({ formData, onChange }) => 
                 onChange={(e) => onChange('alliesLost', e.target.checked)}
               />
             }
-            label="Allies Lost"
+            label="ဆုံးရှုံးမှု (မိမိတပ်)"
           />
         </Box>
       </Paper>

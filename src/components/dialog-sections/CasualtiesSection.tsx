@@ -20,7 +20,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TextField
-            label="SAC Death"
+            label="သေဆုံးအရေအတွက် (ရန်သူ့တပ်)"
             type="number"
             value={formData.sacDeath || ''}
             onChange={(e) => onChange('sacDeath', parseInt(e.target.value) || null)}
@@ -28,7 +28,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="SAC Injury"
+            label="ထိခိုက်ဒဏ်ရာရရှိမှု (ရန်သူတပ်)"
             type="number"
             value={formData.sacInjury || ''}
             onChange={(e) => onChange('sacInjury', parseInt(e.target.value) || null)}
@@ -36,7 +36,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="SAC Captive"
+            label="သုံ့ပန်း (ရန်သူတပ်သား)"
             type="number"
             value={formData.sacCaptive || ''}
             onChange={(e) => onChange('sacCaptive', parseInt(e.target.value) || null)}
@@ -51,7 +51,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
           <TextField
-            label="Allies Death"
+            label="သေဆုံးအရေအတွက် (မိမိတပ်)"
             type="number"
             value={formData.alliesDeath || ''}
             onChange={(e) => onChange('alliesDeath', parseInt(e.target.value) || null)}
@@ -59,7 +59,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="Allies Injury"
+            label="ထိခိုက်ဒဏ်ရာရရှိမှု (မိမိတပ်)"
             type="number"
             value={formData.alliesInjury || ''}
             onChange={(e) => onChange('alliesInjury', parseInt(e.target.value) || null)}
@@ -67,7 +67,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="Allies Captive"
+            label="သုံ့ပန်း (မိမိတပ်သား)"
             type="number"
             value={formData.alliesCaptive || ''}
             onChange={(e) => onChange('alliesCaptive', parseInt(e.target.value) || null)}
@@ -82,7 +82,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
         </Typography>
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TextField
-            label="Public Death"
+            label="သေဆုံးအရေအတွက် (ပြည်သူ)"
             type="number"
             value={formData.publicDeath || ''}
             onChange={(e) => onChange('publicDeath', parseInt(e.target.value) || null)}
@@ -90,7 +90,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="Public Injury"
+            label="ထိခိုက်ဒဏ်ရာရရှိမှု (ပြည်သူ)"
             type="number"
             value={formData.publicInjury || ''}
             onChange={(e) => onChange('publicInjury', parseInt(e.target.value) || null)}
@@ -98,7 +98,7 @@ const CasualtiesSection: React.FC<CasualtiesSectionProps> = ({ formData, onChang
             size="small"
           />
           <TextField
-            label="Public Captive"
+            label="သုံ့ပန်း (ပြည်သူ)"
             type="number"
             value={formData.publicCaptive || ''}
             onChange={(e) => onChange('publicCaptive', parseInt(e.target.value) || null)}

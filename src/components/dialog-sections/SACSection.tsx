@@ -10,7 +10,6 @@ interface SACSectionProps {
 }
 
 const SACSection: React.FC<SACSectionProps> = ({ formData, onChange }) => {
-  console.log('render this')
   return (
     <Paper elevation={2} sx={{ p: 2 }}>
                 <Typography variant="h6" gutterBottom>
@@ -61,7 +60,7 @@ const SACSection: React.FC<SACSectionProps> = ({ formData, onChange }) => {
         {/* SAC Details */}
         <Box sx={{ display: 'flex', gap: 2, mt: 2, alignItems: 'center' }}>
           <TypeaheadMultiple
-            label="SAC Name"
+            label="ရန်သူ့တပ်အမည်များ"
             value={formData.sacName || ''}
             options={sacNameOptions}
             onChange={(value) => onChange('sacName', value)}
@@ -70,7 +69,7 @@ const SACSection: React.FC<SACSectionProps> = ({ formData, onChange }) => {
           />
 
           <TextField
-            label="SAC Admin"
+            label="ရန်သူအုပ်ချုပ်မှု"
             value={formData.sacAdmin || ''}
             onChange={(e) => onChange('sacAdmin', e.target.value)}
             fullWidth
