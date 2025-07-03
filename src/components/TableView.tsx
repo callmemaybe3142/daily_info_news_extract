@@ -21,6 +21,8 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DownloadIcon from '@mui/icons-material/Download';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import TableRowEditDialog from './TableRowEditDialog';
 
 interface TableViewProps {
   isFullWidth?: boolean;
@@ -30,6 +32,9 @@ interface TableViewProps {
 export const TableView: React.FC<TableViewProps> = ({ isFullWidth: _isFullWidth = false, onBack }) => {
   const { tableData } = useApp();
   const [copySuccess, setCopySuccess] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<TableDataItem | null>(null);
+  const [loadingRowId, setLoadingRowId] = useState<number | null>(null);
 
   if (!tableData || tableData.length === 0) {
     return (
@@ -183,6 +188,29 @@ export const TableView: React.FC<TableViewProps> = ({ isFullWidth: _isFullWidth 
     URL.revokeObjectURL(url);
   };
 
+  // Row click handler
+  const handleRowClick = async (row: TableDataItem) => {
+    setLoadingRowId(row.id);
+    // Simulate loading delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 300));
+    setSelectedRow(row);
+    setEditDialogOpen(true);
+    setLoadingRowId(null);
+  };
+
+  // Dialog close handler
+  const handleDialogClose = () => {
+    setEditDialogOpen(false);
+    setSelectedRow(null);
+  };
+
+  // Dialog save handler (to be implemented later)
+  const handleDialogSave = () => {
+    // TODO: Update the table data in context
+    setEditDialogOpen(false);
+    setSelectedRow(null);
+  };
+
   return (
     <Box sx={{ 
       display: 'flex', 
@@ -275,10 +303,34 @@ export const TableView: React.FC<TableViewProps> = ({ isFullWidth: _isFullWidth 
             <TableBody>
               {tableData.map((row) => (
                 <TableRow
-                  sx={{ height: 48 }}
+                  sx={{ 
+                    height: 48,
+                    opacity: loadingRowId === row.id ? 0.7 : 1,
+                    position: 'relative'
+                  }}
                   key={row.id}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: loadingRowId === row.id ? 'wait' : 'pointer' }}
+                  onClick={() => loadingRowId === null && handleRowClick(row)}
                 >
+                  {loadingRowId === row.id && (
+                    <TableCell
+                      colSpan={columns.length}
+                      sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                        zIndex: 1,
+                      }}
+                    >
+                      <CircularProgress size={24} />
+                    </TableCell>
+                  )}
                   {columns.map((column) => (
                     <TableCell 
                       key={column.field}
@@ -303,6 +355,13 @@ export const TableView: React.FC<TableViewProps> = ({ isFullWidth: _isFullWidth 
           </Table>
         </TableContainer>
       </Box>
+      {/* Edit Dialog */}
+      <TableRowEditDialog
+        open={editDialogOpen}
+        row={selectedRow}
+        onClose={handleDialogClose}
+        onSave={handleDialogSave}
+      />
     </Box>
   );
 }; 

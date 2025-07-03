@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography,
   Box,
-  Button,
 } from '@mui/material';
 import { ArrowForward } from '@mui/icons-material';
 import { ReportDate } from './ReportDate';
 import { NewsExtraction } from './NewsExtraction';
 import { useApp } from '../contexts/AppContext';
+import LoadingButton from './common/LoadingButton';
 
 interface NewsListProps {
   isFullWidth?: boolean;
@@ -16,10 +16,15 @@ interface NewsListProps {
 
 export const NewsList: React.FC<NewsListProps> = ({ isFullWidth: _isFullWidth = false, onProceed }) => {
   const { generateTableData } = useApp();
+  const [isProceeding, setIsProceeding] = useState(false);
 
-  const handleProceed = () => {
+  const handleProceed = async () => {
+    setIsProceeding(true);
+    // Simulate processing time for generating table data
+    await new Promise(resolve => setTimeout(resolve, 800));
     generateTableData();
     onProceed?.();
+    setIsProceeding(false);
   };
 
   return (
@@ -49,15 +54,16 @@ export const NewsList: React.FC<NewsListProps> = ({ isFullWidth: _isFullWidth = 
           display: 'flex', 
           justifyContent: 'flex-end' 
         }}>
-          <Button
+          <LoadingButton
+            loading={isProceeding}
             variant="contained"
             size="large"
-            endIcon={<ArrowForward />}
+            endIcon={!isProceeding ? <ArrowForward /> : undefined}
             onClick={handleProceed}
             sx={{ minWidth: 120 }}
           >
-            Proceed
-          </Button>
+            {isProceeding ? 'Processing...' : 'Proceed'}
+          </LoadingButton>
         </Box>
       )}
     </Box>

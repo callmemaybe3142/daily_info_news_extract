@@ -15,7 +15,8 @@ type AppAction =
   | { type: 'SET_CURRENT_STEP'; payload: 'newsList' | 'tableView' }
   | { type: 'UPDATE_DOCUMENT_DATA'; payload: Partial<ExtractedDocumentData> }
   | { type: 'UPDATE_NEWS_ITEM'; payload: { id: string; content: string } }
-  | { type: 'SET_TABLE_DATA'; payload: TableDataItem[] };
+  | { type: 'SET_TABLE_DATA'; payload: TableDataItem[] }
+  | { type: 'UPDATE_TABLE_ITEM'; payload: TableDataItem };
 
 // Initial state
 const initialState: AppState = {
@@ -64,6 +65,14 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
       return state;
     case 'SET_TABLE_DATA':
       return { ...state, tableData: action.payload };
+    case 'UPDATE_TABLE_ITEM':
+      if (state.tableData) {
+        const updatedTableData = state.tableData.map(item =>
+          item.id === action.payload.id ? action.payload : item
+        );
+        return { ...state, tableData: updatedTableData };
+      }
+      return state;
     default:
       return state;
   }
@@ -252,6 +261,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     }
   };
 
+  const updateTableItem = (item: TableDataItem): void => {
+    dispatch({ type: 'UPDATE_TABLE_ITEM', payload: item });
+  };
+
   const contextValue: AppContextType = {
     ...state,
     uploadFile,
@@ -262,6 +275,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     updateDocumentData,
     updateNewsItem,
     generateTableData,
+    updateTableItem,
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

@@ -109,6 +109,7 @@ export interface AppContextType extends AppState {
   updateDocumentData: (data: Partial<ExtractedDocumentData>) => void;
   updateNewsItem: (id: string, content: string) => void;
   generateTableData: () => void;
+  updateTableItem: (item: TableDataItem) => void;
 }
 
 export interface MammothResult {

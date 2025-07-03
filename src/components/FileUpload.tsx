@@ -37,7 +37,7 @@ export const FileUpload: React.FC = () => {
 
   return (
     <Box>
-      {!isLoading && !uploadedFile && (
+      {/* {!isLoading && !uploadedFile && (
         <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
           <Button
             component="label"
@@ -53,7 +53,22 @@ export const FileUpload: React.FC = () => {
             />
           </Button>
         </Box>
-      )}
+      )} */}
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
+          <Button
+            component="label"
+            variant="contained"
+            startIcon={<CloudUpload />}
+            size="large"
+          >
+            Upload DOCX File
+            <VisuallyHiddenInput
+              type="file"
+              accept=".docx"
+              onChange={handleFileUpload}
+            />
+          </Button>
+        </Box>
 
       {isLoading && (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2 }}>
