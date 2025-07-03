@@ -3,16 +3,22 @@ import {
   Box,
   IconButton,
   Tooltip,
+  ButtonGroup,
+  Button,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { AppProvider, useApp } from './contexts/AppContext';
 import { FileUpload } from './components/FileUpload';
 import { DocumentPreview } from './components/DocumentPreview';
 import { DataExtraction } from './components/DataExtraction';
+import TableViewIcon from '@mui/icons-material/TableView';
+import ListIcon from '@mui/icons-material/List';
 
 const AppContent: React.FC = () => {
-  const { uploadedFile, currentStep } = useApp();
+  const { uploadedFile, currentStep, setCurrentStep, tableData } = useApp();
   const [showDocumentPreview, setShowDocumentPreview] = useState(true);
+
+  const hasData = !!uploadedFile || (tableData && tableData.length > 0);
 
   // Hide document preview when switching to table view
   React.useEffect(() => {
@@ -30,12 +36,32 @@ const AppContent: React.FC = () => {
   return (
     <Box sx={{ width: '100%', height: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
       {/* Top section with upload button */}
-      <Box sx={{ p: 2, borderBottom: '1px solid #e0e0e0' }}>
+      <Box sx={{ p: 2, borderBottom: '1px solid #e0e0e0', display: 'flex', alignItems: 'center', gap: 2 }}>
         <FileUpload />
+        {hasData && (
+          <ButtonGroup variant="outlined" size="small" sx={{ ml: 2 }}>
+            <Button
+              startIcon={<ListIcon />}
+              variant={currentStep === 'newsList' ? 'contained' : 'outlined'}
+              onClick={() => setCurrentStep('newsList')}
+              data-testid="news-list-btn"
+            >
+              News List
+            </Button>
+            <Button
+              startIcon={<TableViewIcon />}
+              variant={currentStep === 'tableView' ? 'contained' : 'outlined'}
+              onClick={() => setCurrentStep('tableView')}
+              data-testid="table-view-btn"
+            >
+              Table View
+            </Button>
+          </ButtonGroup>
+        )}
       </Box>
 
       {/* Absolute positioned toggle button */}
-      {uploadedFile && (
+      {hasData && uploadedFile && (
         <Tooltip title={showDocumentPreview ? "Hide Document Preview" : "Show Document Preview"}>
           <IconButton 
             onClick={toggleDocumentPreview}
@@ -58,10 +84,10 @@ const AppContent: React.FC = () => {
         </Tooltip>
       )}
 
-      {uploadedFile && (
+      {hasData && (
         <>
-          {/* Split layout when document preview is shown */}
-          {showDocumentPreview && (
+          {/* Split layout when document preview is shown (only for DOCX) */}
+          {uploadedFile && showDocumentPreview && (
             <Box 
               sx={{ 
                 display: 'flex', 
@@ -98,8 +124,8 @@ const AppContent: React.FC = () => {
             </Box>
           )}
 
-          {/* Full-width layout when document preview is hidden */}
-          {!showDocumentPreview && (
+          {/* Full-width layout when document preview is hidden or for CSV */}
+          {(!uploadedFile || !showDocumentPreview) && (
             <Box 
               sx={{ 
                 width: '100%',

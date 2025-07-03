@@ -265,6 +265,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: 'UPDATE_TABLE_ITEM', payload: item });
   };
 
+  const setTableData = (data: TableDataItem[]): void => {
+    dispatch({ type: 'SET_TABLE_DATA', payload: data });
+  };
+
   const contextValue: AppContextType = {
     ...state,
     uploadFile,
@@ -276,6 +280,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     updateNewsItem,
     generateTableData,
     updateTableItem,
+    setTableData,
   };
 
   return <AppContext.Provider value={contextValue}>{children}</AppContext.Provider>;

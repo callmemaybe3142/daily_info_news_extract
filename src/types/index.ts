@@ -110,6 +110,7 @@ export interface AppContextType extends AppState {
   updateNewsItem: (id: string, content: string) => void;
   generateTableData: () => void;
   updateTableItem: (item: TableDataItem) => void;
+  setTableData: (data: TableDataItem[]) => void;
 }
 
 export interface MammothResult {

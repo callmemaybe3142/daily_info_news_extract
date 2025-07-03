@@ -23,6 +23,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import TableRowEditDialog from './TableRowEditDialog';
+import Checkbox from '@mui/material/Checkbox';
 
 interface TableViewProps {
   isFullWidth?: boolean;
@@ -346,7 +347,11 @@ export const TableView: React.FC<TableViewProps> = ({ isFullWidth: _isFullWidth 
                         padding: '8px 12px',
                       }}
                     >
-                      {row[column.field as keyof TableDataItem] || 'N/A'}
+                      {(column.field === 'isFollowUp' || column.field === 'SACDid' || column.field === 'sacLost' || column.field === 'alliesLost')
+                        ? <Checkbox checked={Boolean(row[column.field])} disabled />
+                        : (row[column.field as keyof TableDataItem] !== undefined && row[column.field as keyof TableDataItem] !== null
+                            ? String(row[column.field as keyof TableDataItem])
+                            : 'N/A')}
                     </TableCell>
                   ))}
                 </TableRow>

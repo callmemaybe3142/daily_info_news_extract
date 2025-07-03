@@ -13,10 +13,10 @@ interface DataExtractionProps {
   isFullWidth?: boolean;
 }
 
-
-
 export const DataExtraction: React.FC<DataExtractionProps> = ({ isFullWidth = false }) => {
-  const { uploadedFile, currentStep, setCurrentStep } = useApp();
+  const { uploadedFile, currentStep, setCurrentStep, tableData } = useApp();
+
+  const hasData = !!uploadedFile || (tableData && tableData.length > 0);
 
   const handleProceed = () => {
     setCurrentStep('tableView');
@@ -26,7 +26,7 @@ export const DataExtraction: React.FC<DataExtractionProps> = ({ isFullWidth = fa
     setCurrentStep('newsList');
   };
 
-  if (!uploadedFile) {
+  if (!hasData) {
     return (
       <Paper 
         elevation={0} 
